@@ -22,7 +22,7 @@ def filterTitle(title):
 class RitzSpider(scrapy.Spider):
     name = "ritz-spider"
     start_urls = [
-        "https://www.ritzcinemas.com.au/monday",
+        "https://www.ritzcinemas.com.au/now-showing/monday",
         "https://www.ritzcinemas.com.au/now-showing/tuesday",
         "https://www.ritzcinemas.com.au/now-showing/wednesday",
         "https://www.ritzcinemas.com.au/now-showing/thursday",
