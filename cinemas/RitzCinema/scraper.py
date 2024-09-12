@@ -22,11 +22,11 @@ def filterTitle(title):
 class RitzSpider(scrapy.Spider):
     name = "ritz-spider"
     start_urls = [
-        "https://www.ritzcinemas.com.au/now-showing/monday",
-        "https://www.ritzcinemas.com.au/now-showing/tuesday",
-        "https://www.ritzcinemas.com.au/now-showing/wednesday",
-        "https://www.ritzcinemas.com.au/now-showing/thursday",
-        "https://www.ritzcinemas.com.au/now-showing/friday",
+        "https://www.ritzcinemas.com.au/now-showing/Monday",
+        "https://www.ritzcinemas.com.au/now-showing/Tuesday",
+        "https://www.ritzcinemas.com.au/now-showing/Wednesday",
+        "https://www.ritzcinemas.com.au/now-showing/Thursday",
+        "https://www.ritzcinemas.com.au/now-showing/Friday",
     ]
 
     def parse(self, response):
@@ -38,7 +38,6 @@ class RitzSpider(scrapy.Spider):
         the day of the week, and the screenings for that film on that day.
         """
         FILM_SELECTOR = ".Movie"
-        DAY_SELECTOR = ".swiper-slide .Selected::text"
         for film_block in response.css(FILM_SELECTOR):
             film_details = film_block.css(".Wrapper")
             # Select the title of the film in the href attribute
@@ -47,6 +46,6 @@ class RitzSpider(scrapy.Spider):
 
             yield {
                 "title": filterTitle(film_details.css(TITLE_SELECTOR).extract_first()),
-                "day": response.css(DAY_SELECTOR).extract_first(),
+                "day": response.request.url.split("/")[-1],
                 "screenings": list(map(regularTimeToStandard, screenings)),
             }
