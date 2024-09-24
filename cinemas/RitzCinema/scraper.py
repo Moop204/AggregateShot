@@ -20,7 +20,7 @@ def filterTitle(title):
 
 
 class RitzSpider(scrapy.Spider):
-    name = "ritz-spider"
+    name = "RitzCinema"
     start_urls = [
         "https://www.ritzcinemas.com.au/now-showing/Monday",
         "https://www.ritzcinemas.com.au/now-showing/Tuesday",
@@ -28,6 +28,14 @@ class RitzSpider(scrapy.Spider):
         "https://www.ritzcinemas.com.au/now-showing/Thursday",
         "https://www.ritzcinemas.com.au/now-showing/Friday",
     ]
+    custom_settings = {
+        "FEEDS": {
+            f"collected_data/{name}.json": {
+                "format": "json",
+                "overwrite": True,
+            }
+        },
+    }
 
     def parse(self, response):
         """
